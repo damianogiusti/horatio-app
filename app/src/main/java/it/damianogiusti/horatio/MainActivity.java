@@ -33,6 +33,20 @@ public class MainActivity extends HoratioActivity implements AudioPlayerManager.
     }
 
     @Override
+    protected void onAwesomenessNeedsToChangeMoment(int progress) {
+        if (audioPlayerManager != null)
+            audioPlayerManager.changeSeek(progress);
+    }
+
+    @Override
+    protected void onAwesomenessNotMoreNeeded() {
+        if (audioPlayerManager != null) {
+            audioPlayerManager.stopPlaying();
+            audioPlayerManager = null;
+        }
+    }
+
+    @Override
     public void onPlayingFinish() {
         onAwesomenessCompleted();
         audioPlayerManager = null;

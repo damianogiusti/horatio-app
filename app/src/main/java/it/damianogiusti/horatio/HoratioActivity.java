@@ -18,7 +18,8 @@ public abstract class HoratioActivity extends AppCompatActivity {
     private ImageView imgHoratioPressed;
     private SeekBar seekBar;
 
-    private boolean canClick = true;
+    private boolean canGetHoratio = true;
+    private boolean canDisposeHoratio = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,17 +37,65 @@ public abstract class HoratioActivity extends AppCompatActivity {
         imgHoratioDefault.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!canClick)
+                if (!canGetHoratio)
                     return;
-                canClick = false;
+                canGetHoratio = false;
                 // show horatio
                 imgHoratioPressed.setVisibility(View.VISIBLE);
-                AnimUtils.fadeInView(imgHoratioPressed, null);
+                AnimUtils.fadeInView(imgHoratioPressed, new Animator.AnimatorListener() {
+                    @Override
+                    public void onAnimationStart(Animator animation) {
+
+                    }
+
+                    @Override
+                    public void onAnimationEnd(Animator animation) {
+                        canDisposeHoratio = true;
+                        imgHoratioDefault.setVisibility(View.INVISIBLE);
+                    }
+
+                    @Override
+                    public void onAnimationCancel(Animator animation) {
+
+                    }
+
+                    @Override
+                    public void onAnimationRepeat(Animator animation) {
+
+                    }
+                });
                 // show seekBar
                 seekBar.setVisibility(View.VISIBLE);
                 AnimUtils.fadeInView(seekBar, null);
                 // request awesomeness
                 onNeedToBeAwesome();
+            }
+        });
+
+        imgHoratioPressed.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!canDisposeHoratio)
+                    return;
+                onAwesomenessNotMoreNeeded();
+                onAwesomenessCompleted();
+            }
+        });
+
+        seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+                onAwesomenessNeedsToChangeMoment(seekBar.getProgress());
             }
         });
     }
@@ -67,7 +116,12 @@ public abstract class HoratioActivity extends AppCompatActivity {
         seekBar.setProgress(progress);
     }
 
+    protected abstract void onAwesomenessNeedsToChangeMoment(int progress);
+
+    protected abstract void onAwesomenessNotMoreNeeded();
+
     protected void onAwesomenessCompleted() {
+        imgHoratioDefault.setVisibility(View.VISIBLE);
         AnimUtils.fadeOutView(seekBar, null);
         AnimUtils.fadeOutView(imgHoratioPressed, new Animator.AnimatorListener() {
             @Override
@@ -80,7 +134,7 @@ public abstract class HoratioActivity extends AppCompatActivity {
                 seekBar.setVisibility(View.GONE);
                 seekBar.setProgress(0);
                 imgHoratioPressed.setVisibility(View.GONE);
-                canClick = true;
+                canGetHoratio = true;
             }
 
             @Override

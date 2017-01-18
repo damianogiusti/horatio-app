@@ -140,8 +140,11 @@ public class AudioPlayerManager {
      * Stops audio playing.
      */
     public void stopPlaying() {
-        isPlaying = false;
-        isPaused = false;
+        if (mediaPlayer.isPlaying()) {
+            mediaPlayer.stop();
+            isPlaying = false;
+            isPaused = false;
+        }
     }
 
     /**
