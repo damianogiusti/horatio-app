@@ -10,6 +10,24 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="it.damianogiusti.horatio.MainActivity">
 
+    <TextView
+        android:id="@+id/txtTimesText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:textSize="16dp"
+        android:text="@string/times_been_awesome" />
+
+    <TextView
+        android:id="@+id/txtTimesBeenAwesome"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/txtTimesText"
+        android:textAppearance="?android:textAppearanceLarge"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/activity_vertical_margin"
+        android:textColor="@android:color/black" />
+
     <ImageView
         android:id="@+id/imgHoratio"
         android:layout_width="match_parent"

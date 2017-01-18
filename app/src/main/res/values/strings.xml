@@ -2,4 +2,5 @@
     <string name="app_name">Horatio</string>
     <string name="click_to_be_awesome">Click to be awesome!</string>
     <string name="cannot_get_horatio">Sorry, we cannot find Horatio.</string>
+    <string name="times_been_awesome">Times you\'ve been awesome:</string>
 </resources>

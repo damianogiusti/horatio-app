@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.SeekBar;
+import android.widget.TextView;
 
 import it.damianogiusti.horatio.utils.AnimUtils;
 
@@ -17,6 +18,7 @@ public abstract class HoratioActivity extends AppCompatActivity {
     private ImageView imgHoratioDefault;
     private ImageView imgHoratioPressed;
     private SeekBar seekBar;
+    private TextView txtTimesBeenAwesome;
 
     private boolean canGetHoratio = true;
     private boolean canDisposeHoratio = false;
@@ -100,16 +102,30 @@ public abstract class HoratioActivity extends AppCompatActivity {
         });
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        updateAwesomenessMomentsLabel();
+    }
+
     private void bindViews() {
         imgHoratioDefault = (ImageView) findViewById(R.id.imgHoratio);
         imgHoratioPressed = (ImageView) findViewById(R.id.imgHoratioPressed);
         seekBar = (SeekBar) findViewById(R.id.seekBar);
+        txtTimesBeenAwesome = (TextView) findViewById(R.id.txtTimesBeenAwesome);
     }
+
+    private void updateAwesomenessMomentsLabel() {
+        txtTimesBeenAwesome.setText(String.format("%d", getCountOfAwesomeMoments()));
+    }
+
+    protected abstract int getCountOfAwesomeMoments();
 
     protected abstract void onNeedToBeAwesome();
 
     protected void onAwesomenessStarted(int durationOfAwesome) {
         seekBar.setMax(durationOfAwesome);
+        updateAwesomenessMomentsLabel();
     }
 
     protected void onAwesomenessInProgress(int progress) {
