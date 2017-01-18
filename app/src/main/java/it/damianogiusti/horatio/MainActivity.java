@@ -30,6 +30,7 @@ public class MainActivity extends HoratioActivity implements AudioPlayerManager.
         File horatioFile = FileManager.getHoratioFile(getApplicationContext());
         if (horatioFile == null) {
             Toast.makeText(MainActivity.this, getString(R.string.cannot_get_horatio), Toast.LENGTH_SHORT).show();
+            onAwesomenessCompleted();
             return;
         }
         spManager.incrementAwesomeMomentsCount();
